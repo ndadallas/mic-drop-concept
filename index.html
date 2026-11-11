@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MIC DROP — l'émission</title>
+<meta name="description" content="MIC DROP, émission TV fictive pour Tyler, the Creator. Réalisation et motion design : MADEBYAPO.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="intro-on">
+
+<!-- INTRO 3D -->
+<div class="intro" id="intro">
+  <p class="intro__bg" aria-hidden="true">MIC<br>DROP</p>
+  <canvas id="introCanvas" aria-hidden="true"></canvas>
+  <span class="sticker intro__ring" id="introRing" aria-hidden="true">DRIIING</span>
+  <p class="intro__load">Réglage de l'antenne…</p>
+  <p class="intro__cta" id="introCta"><span>Ça sonne.</span> Décroche pour lancer l'émission.</p>
+  <button class="intro__skip" id="introSkip">Passer l'intro</button>
+</div>
+
+<header class="bar">
+  <span class="bar__logo">MIC<br>DROP</span>
+  <span class="bar__air"><i></i>À l'antenne</span>
+  <a class="bar__by" href="https://madebyapo.fr/">par MADEBYAPO</a>
+</header>
+
+<main>
+  <!-- HERO : le standard -->
+  <section class="hero">
+    <p class="hero__bg" aria-hidden="true">DROP</p>
+
+    <div class="hero__stage">
+      <figure class="cut hero__poster" data-tilt="-2">
+        <img src="assets/img/poster-culture.jpg" alt="Générique de MIC DROP : Tyler, the Creator en collage halftone" width="1600" height="894">
+      </figure>
+      <span class="sticker hero__hello" aria-hidden="true">HELLOOO</span>
+    </div>
+
+    <button class="phone" id="phone" aria-label="Décrocher : lancer l'émission">
+      <svg viewBox="0 0 120 420" aria-hidden="true">
+        <path class="phone__cord" d="M60 0 V40 q12 6 0 12 q-12 6 0 12 q12 6 0 12 q-12 6 0 12 q12 6 0 12 q-12 6 0 12 q12 6 0 12 q-12 6 0 12 q12 6 0 12 q-12 6 0 12 q12 6 0 12 q-12 6 0 12 q12 6 0 12 q-12 6 0 12 q12 6 0 12 q-12 6 0 12 V250"/>
+        <g class="phone__handset">
+          <path class="phone__edge" d="M66 262 C 86 300, 86 344, 66 384"/>
+          <ellipse class="phone__edge" cx="50" cy="262" rx="26" ry="15" transform="rotate(-18 50 262)"/>
+          <ellipse class="phone__edge" cx="50" cy="386" rx="26" ry="15" transform="rotate(18 50 386)"/>
+          <path class="phone__grip" d="M66 262 C 86 300, 86 344, 66 384"/>
+          <ellipse cx="50" cy="262" rx="26" ry="15" transform="rotate(-18 50 262)"/>
+          <ellipse cx="50" cy="386" rx="26" ry="15" transform="rotate(18 50 386)"/>
+          <path class="phone__shine" d="M80 296 C 86 320, 86 336, 82 352"/>
+        </g>
+      </svg>
+      <span class="phone__label">Décroche</span>
+    </button>
+
+    <div class="hero__txt">
+      <h1>MIC DROP</h1>
+      <p>Une émission TV fictive pour <strong>Tyler, the Creator</strong>.</p>
+    </div>
+  </section>
+
+  <!-- AU PROGRAMME -->
+  <section class="prog">
+    <h2 class="sec-title"><span>Au</span> programme</h2>
+    <ol class="prog__grid">
+      <li class="prog__item">
+        <figure class="cut" data-tilt="2">
+          <video src="assets/video/mv-culture.mp4" muted loop playsinline preload="metadata" aria-label="Extrait animé de MIC DROP"></video>
+        </figure>
+        <p><b>01</b> Le générique</p>
+      </li>
+      <li class="prog__item">
+        <figure class="cut" data-tilt="-3">
+          <img src="assets/img/dt-micdrop-pointe.jpg" alt="Tyler pointe la caméra devant le titre DROP" width="1000" height="560" loading="lazy">
+        </figure>
+        <p><b>02</b> Le plateau</p>
+      </li>
+      <li class="prog__item">
+        <figure class="cut" data-tilt="1.5">
+          <img src="assets/img/dt-micdrop-hello.jpg" alt="Tête découpée, casquette MADEBYAPO, téléphone rouge suspendu" width="1000" height="558" loading="lazy">
+        </figure>
+        <p><b>03</b> Le standard</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- GÉNÉRIQUE DE FIN -->
+  <section class="credits" aria-label="Crédits">
+    <div class="credits__roll">
+      <p class="credits__head">Générique</p>
+      <dl>
+        <dt>Réalisateur</dt><dd>MADEBYAPO</dd>
+        <dt>Motion design</dt><dd>MADEBYAPO</dd>
+        <dt>Site</dt><dd>Dallas</dd>
+      </dl>
+      <p class="credits__year">2026</p>
+    </div>
+  </section>
+</main>
+
+<footer class="end" id="end">
+  <svg class="mic" id="mic" viewBox="0 0 80 220" aria-hidden="true">
+    <circle cx="40" cy="36" r="30" class="mic__head"/>
+    <path d="M14 30 h52 M12 42 h56 M20 18 h40 M20 54 h40" class="mic__grill"/>
+    <rect x="22" y="64" width="36" height="14" rx="3" class="mic__ring"/>
+    <path d="M24 78 h32 l-8 136 a6 6 0 0 1 -6 6 h-4 a6 6 0 0 1 -6 -6z" class="mic__body"/>
+  </svg>
+  <p class="end__word">MIC DROP.</p>
+  <span class="sticker end__thud" aria-hidden="true">BOUM</span>
+  <a class="end__back" href="https://madebyapo.fr/">madebyapo.fr</a>
+</footer>
+
+<!-- Lecteur : la TV -->
+<div class="tv" id="tv" hidden>
+  <div class="tv__set" role="dialog" aria-modal="true" aria-label="MIC DROP, l'émission">
+    <div class="tv__screen">
+      <iframe id="tvFrame" title="MIC DROP" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="tv__foot">
+      <span class="bar__air"><i></i>En direct</span>
+      <a href="https://vimeo.com/1146238177" target="_blank" rel="noopener">Voir sur Vimeo</a>
+      <button class="tv__close" id="tvClose" aria-label="Raccrocher">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+        Raccrocher
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/main.js"></script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module" src="assets/intro.js"></script>
+<script>
+  // filet de sécurité : si la 3D ne charge pas (pas de WebGL, CDN bloqué), on entre directement
+  setTimeout(function () {
+    if (window.__introReady) return;
+    document.body.classList.remove('intro-on');
+    var i = document.getElementById('intro'); if (i) i.remove();
+  }, 8000);
+</script>
+</body>
+</html>
