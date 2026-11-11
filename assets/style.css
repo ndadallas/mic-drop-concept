@@ -163,6 +163,8 @@ path.phone__edge{fill:none;stroke-width:36}
 
 /* ---------- intro 3D ---------- */
 .intro-on{overflow:hidden}
+/* mobile : quand la barre du navigateur bouge, le site pouvait apparaître sous l'intro ; on le masque tant que l'intro couvre l'écran */
+body:has(.intro:not(.is-out):not(.is-off)) :is(.bar,main,.end){visibility:hidden}
 .intro{
   position:fixed;inset:0;z-index:45;background:var(--cream);cursor:pointer;
   transition:opacity .8s ease,transform .8s ease;
