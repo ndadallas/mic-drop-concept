@@ -198,7 +198,7 @@ function resize() {
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   // recule la caméra en portrait pour garder la scène entière
-  camera.userData.back = Math.max(1, 1.45 / (w / h) * 0.72);
+  camera.userData.back = Math.max(1, 1.45 / (w / h) * 0.8);
   camera.updateProjectionMatrix();
 }
 addEventListener('resize', resize);

@@ -60,8 +60,70 @@ function onScroll() {
 addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
-// Fin : le micro tombe une fois.
+// Fin : le micro tombe (gravité + rebonds), percute « MIC DROP. » et s'y couche.
 const end = document.getElementById('end');
+const stage = document.getElementById('endStage');
+const mic = document.getElementById('mic');
+const word = document.getElementById('endWord');
+const wave = document.getElementById('endWave');
+word.innerHTML = [...word.textContent].map(c => c === ' ' ? ' ' : `<span>${c}</span>`).join('');
+const letters = [...word.querySelectorAll('span')];
+
+function dropMic() {
+  const s = stage.getBoundingClientRect(), w = word.getBoundingClientRect();
+  const mw = mic.getBoundingClientRect().width, mh = mw * 2.6; // viewBox 100x260
+  // repère : centre du micro, dans le stage
+  const groundY = w.top - s.top - mw * 0.28; // couché, son épaisseur repose sur le haut des lettres
+  const centerX = w.left - s.left + w.width * 0.55;
+  const place = (x, y, a) => { mic.style.transform = `translate(${x - mw / 2}px,${y - mh / 2}px) rotate(${a}deg)`; };
+  mic.style.visibility = 'visible';
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { place(centerX, groundY, 90); impact(centerX, 0.4); return; }
+
+  let x = centerX + mw * 0.6, y = -s.top - mh, vx = -mw * 0.4, vy = 0, a = -28, va = 70, hits = 0, last = performance.now();
+  const g = 3600; // px/s², une chute franche
+  requestAnimationFrame(function step(now) {
+    const dt = Math.min(0.032, (now - last) / 1000); last = now;
+    vy += g * dt; y += vy * dt; x += vx * dt;
+    if (hits === 0) a += va * dt; // tourne en tombant
+    else { va += (90 - a) * 120 * dt; va *= Math.pow(0.02, dt); a += va * dt; vx *= Math.pow(0.08, dt); } // se couche à plat
+    if (y >= groundY && vy > 0) {
+      y = groundY;
+      impact(x, Math.min(1, vy / 1800) * (hits ? 0.35 : 1));
+      vy = -vy * (hits ? 0.25 : 0.32); // rebond amorti
+      if (!hits) { va = (90 - a) * 6; vx = -mw * 1.3; }
+      hits++;
+      if (hits > 2 || Math.abs(vy) < 90) vy = 0;
+    }
+    place(x, y, a);
+    const done = hits && vy === 0 && Math.abs(90 - a) < 0.3 && Math.abs(vx) < 2;
+    if (done) place(x, groundY, 90); else requestAnimationFrame(step);
+  });
+}
+
+// choc : les lettres s'enfoncent puis rebondissent (en onde depuis le point d'impact), onde au sol, BOUM
+function impact(ix, force) {
+  const s = stage.getBoundingClientRect();
+  letters.forEach(l => {
+    const r = l.getBoundingClientRect();
+    const d = Math.abs(r.left + r.width / 2 - s.left - ix);
+    const k = force * Math.max(0, 1 - d / (s.width * 0.7));
+    if (k < 0.05) return;
+    const tilt = (Math.random() - 0.5) * 10 * k;
+    l.animate([
+      { transform: 'none' },
+      { transform: `translateY(${14 * k}px) scale(${1 + 0.08 * k},${1 - 0.22 * k}) rotate(${tilt}deg)`, offset: 0.25 },
+      { transform: `translateY(${-10 * k}px) rotate(${-tilt * 0.6}deg)`, offset: 0.6 },
+      { transform: `translateY(${3 * k}px) rotate(${tilt * 0.3}deg)` }
+    ], { duration: 650, delay: d * 0.9, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'forwards' });
+  });
+  if (force < 0.5) return;
+  const w = word.getBoundingClientRect();
+  Object.assign(wave.style, { left: ix + 'px', top: (w.top - s.top) + 'px' });
+  wave.animate([{ transform: 'scale(.2)', opacity: 1 }, { transform: 'scale(3.2,1.6)', opacity: 0 }], { duration: 600, easing: 'cubic-bezier(.2,.8,.3,1)' });
+  stage.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(-5px,4px)' }, { transform: 'translate(4px,-3px)' }, { transform: 'translate(-2px,1px)' }, { transform: 'none' }], { duration: 380 });
+  end.classList.add('is-hit');
+}
+
 new IntersectionObserver((es, io) => {
-  if (es[0].isIntersecting) { end.classList.add('is-dropped'); io.disconnect(); }
-}, { threshold: .5 }).observe(end);
+  if (es[0].isIntersecting) { io.disconnect(); dropMic(); }
+}, { threshold: 0.6 }).observe(end);

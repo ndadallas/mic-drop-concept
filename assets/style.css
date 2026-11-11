@@ -118,27 +118,27 @@ path.phone__edge{fill:none;stroke-width:36}
 /* ---------- fin : le micro tombe ---------- */
 .end{
   position:relative;min-height:65svh;display:grid;place-items:center;align-content:center;gap:10px;
-  padding:56px 16px;text-align:center;overflow:hidden;
+  padding:56px 16px;text-align:center; /* pas d'overflow:hidden : le micro tombe depuis le haut de l'écran */
 }
-.mic{width:clamp(60px,7vw,90px);transform:translateY(-120vh) rotate(-30deg);opacity:0}
-.mic__head{fill:#2B2523;stroke:var(--paper);stroke-width:4}
-.mic__grill{stroke:#6B615C;stroke-width:3}
-.mic__ring{fill:var(--red)}
-.mic__body{fill:var(--ink);stroke:var(--paper);stroke-width:4;paint-order:stroke}
-.end__word{font:400 clamp(72px,16vw,240px)/.85 Anton,sans-serif;color:var(--red)}
-.end__thud{position:absolute;top:30%;right:12%;--tilt:8deg;transform:rotate(var(--tilt)) scale(0);font-size:clamp(24px,3.5vw,44px)}
+/* le micro tombe vraiment (physique en JS), rebondit sur le mot, les lettres encaissent le choc */
+.end__stage{position:relative;padding-top:clamp(90px,14vw,170px)}
+.mic{
+  position:absolute;left:0;top:0;width:clamp(56px,8vw,128px);z-index:2;
+  visibility:hidden;will-change:transform;filter:drop-shadow(5px 7px 0 rgba(27,21,19,.22));
+}
+.mic__paper{fill:var(--paper);stroke:var(--paper);stroke-width:12;stroke-linejoin:round}
+.mic__shine{fill:none;stroke:rgba(255,255,255,.7);stroke-width:5;stroke-linecap:round}
+.mic__shine--body{stroke:rgba(255,255,255,.22);stroke-width:4}
+.end__word{font:400 clamp(72px,16vw,240px)/.85 Anton,sans-serif;color:var(--red);white-space:nowrap}
+.end__word span{display:inline-block;transform-origin:50% 100%}
+.end__wave{
+  position:absolute;left:0;top:0;width:120px;height:40px;margin:-20px 0 0 -60px;border-radius:50%;
+  border:3px solid var(--ink);opacity:0;pointer-events:none;
+}
+.end__thud{position:absolute;top:22%;right:10%;--tilt:8deg;transform:rotate(var(--tilt)) scale(0);font-size:clamp(24px,3.5vw,44px)}
 .end__back{font-weight:600;text-decoration:none;border-bottom:2px solid var(--red)}
-.end.is-dropped .mic{animation:drop 1s cubic-bezier(.5,0,.75,0) forwards}
-.end.is-dropped .end__thud{animation:pop .4s .9s cubic-bezier(.3,1.8,.5,1) forwards}
-.end.is-dropped .end__word{animation:shake .4s .9s}
-@keyframes drop{
-  0%{transform:translateY(-120vh) rotate(-30deg);opacity:1}
-  70%{transform:translateY(40%) rotate(80deg)}
-  82%{transform:translateY(calc(40% - 40px)) rotate(95deg)}
-  100%{transform:translateY(40%) rotate(90deg);opacity:1}
-}
+.end.is-hit .end__thud{animation:pop .4s cubic-bezier(.3,1.8,.5,1) forwards}
 @keyframes pop{to{transform:rotate(var(--tilt)) scale(1)}}
-@keyframes shake{20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-3px,2px)}80%{transform:translate(2px,-1px)}}
 
 /* ---------- TV ---------- */
 .tv{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(27,21,19,.82)}
@@ -224,8 +224,21 @@ iframe.intro__show{opacity:1;pointer-events:auto}
 
 /* ---------- mobile ---------- */
 @media (max-width:700px){
-  .hero__hello{top:-18%;left:-2%}
-  .prog__grid{grid-template-columns:1fr}
+  .hero{min-height:0;padding:150px 16px 64px}
+  .hero__stage{width:100%}
+  .hero__hello{top:-22%;left:-2%;font-size:30px}
+  .hero__txt p{font-size:14px}
+  .phone{top:0;right:14px;width:56px}
+  .phone__label{font-size:10px}
+  .prog{padding:40px 16px 56px}
+  .prog__grid{grid-template-columns:1fr;gap:28px}
   .prog__item:nth-child(n){grid-column:1;margin-top:0}
+  .prog__item:nth-child(2){width:88%;margin-left:auto}
+  .prog__item:nth-child(3){width:92%}
+  .credits__roll{height:auto;padding:110px 16px} /* marge pour le défilement des crédits (±12vh) */
+  .bar__air{margin:0 auto 0 18px}
+  .end{min-height:0;padding:40px 16px 72px}
   .bar__by{display:none}
 }
+/* téléphone en portrait : la vidéo entière plutôt que recadrée */
+@media (orientation:portrait){ video.intro__show{object-fit:contain} }

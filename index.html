@@ -103,13 +103,26 @@
 </main>
 
 <footer class="end" id="end">
-  <svg class="mic" id="mic" viewBox="0 0 80 220" aria-hidden="true">
-    <circle cx="40" cy="36" r="30" class="mic__head"/>
-    <path d="M14 30 h52 M12 42 h56 M20 18 h40 M20 54 h40" class="mic__grill"/>
-    <rect x="22" y="64" width="36" height="14" rx="3" class="mic__ring"/>
-    <path d="M24 78 h32 l-8 136 a6 6 0 0 1 -6 6 h-4 a6 6 0 0 1 -6 -6z" class="mic__body"/>
-  </svg>
-  <p class="end__word">MIC DROP.</p>
+  <div class="end__stage" id="endStage">
+    <!-- micro découpé (contour papier), dessiné debout, tête en haut -->
+    <svg class="mic" id="mic" viewBox="0 0 100 260" aria-hidden="true">
+      <defs>
+        <pattern id="grille" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="3.5" cy="3.5" r="1.7" fill="#2B2523"/></pattern>
+        <clipPath id="tete"><circle cx="50" cy="46" r="34"/></clipPath>
+      </defs>
+      <g class="mic__paper">
+        <circle cx="50" cy="46" r="34"/><rect x="28" y="78" width="44" height="20" rx="4"/><path d="M30 98h40l-9 146a8 8 0 0 1-8 7h-6a8 8 0 0 1-8-7z"/>
+      </g>
+      <circle cx="50" cy="46" r="34" fill="#C9C2B4"/>
+      <rect x="10" y="8" width="80" height="80" fill="url(#grille)" clip-path="url(#tete)"/>
+      <path d="M26 30a34 34 0 0 1 22-16" class="mic__shine"/>
+      <rect x="28" y="78" width="44" height="20" rx="4" fill="#B3171D"/>
+      <path d="M30 98h40l-9 146a8 8 0 0 1-8 7h-6a8 8 0 0 1-8-7z" fill="#1B1513"/>
+      <path d="M44 110l-3 120" class="mic__shine mic__shine--body"/>
+    </svg>
+    <p class="end__word" id="endWord" aria-label="MIC DROP.">MIC DROP.</p>
+    <span class="end__wave" id="endWave" aria-hidden="true"></span>
+  </div>
   <span class="sticker end__thud" aria-hidden="true">BOUM</span>
   <a class="end__back" href="https://madebyapo.fr/">madebyapo.fr</a>
 </footer>
